@@ -1,0 +1,78 @@
+version: '3'
+networks:
+  dbnet:
+  rapidmq:
+    # driver: bridge
+
+services:
+  db:
+    platform: linux/x86_64
+    container_name: "db"
+    image: mysql:5.7
+    volumes:
+      - ./data:/var/lib/mysql
+      # - ./init.sql:/docker-entrypoint-initdb.d/setup.sql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: dm885
+      MYSQL_USER: user
+      MYSQL_PASSWORD: test
+    networks:
+      - dbnet
+    ports:
+      - '3306:3306'
+    expose:
+      - 3306
+
+  rabbitmq:
+    depends_on:
+      - db
+    container_name: 'rabbitmq'
+    image: 'rabbitmq:3.8'
+    environment:
+      - RABBITMQ_PASSWORD=guest
+      - RABBITMQ_USERNAME=guest
+    networks:
+      - rapidmq
+    ports:
+      - 5672:5672
+      - 15672:15672
+    healthcheck:
+        test: ["CMD", "curl", "-f", "http://localhost:15672"]
+        interval: 30s
+        timeout: 10s
+        retries: 10
+
+  gateway:
+    build: ./repos/GatewayService/
+    restart: on-failure
+    depends_on:
+      - rabbitmq
+    ports:
+      - 8080:8080
+    networks:
+      - rapidmq
+      - dbnet
+    environment:
+      rabbitHost: "rabbitmq"
+      rabbitUser: "guest"
+      rabbitPass: "guest"
+
+  auth:
+    depends_on:
+      - gateway
+      - rabbitmq
+    build: ./repos/AuthenticationService/
+    networks:
+      - rapidmq
+      - dbnet
+    restart: always
+    environment:
+      mysqlHost: "db"
+      mysqlPass: password
+      mysqlDb: dm885
+      mysqlUser: root
+      rabbitHost: "rabbitmq"
+      rabbitUser: "guest"
+      rabbitPass: "guest"
