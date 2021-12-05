@@ -1,25 +1,25 @@
-#How to run
+# How to run
 
-##1
+## 1
 Pull service
 ```
 ./pull-services.sh
 ```
 
-##2
+## 2
 Start docker
 ```
 docker-compose up
 ```
 
-#Tips
+# Tips
 
-##Stop docker
+## Stop docker
 ```
 docker-compose down
 ```
 
-##Rebuild
+## Rebuild
 ```
 docker-compose build --no-cache
 ```
