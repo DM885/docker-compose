@@ -13,5 +13,8 @@ git clone https://github.com/DM885/AuthenticationService
 # Clone logging
 git clone https://github.com/DM885/LoggingService.git
 
-# Clone logging
+# Clone CRUD
 git clone https://github.com/DM885/CRUDservice.git
+
+# Clone solver
+git clone https://github.com/DM885/MiniZincService.git

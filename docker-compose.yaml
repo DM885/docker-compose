@@ -112,3 +112,21 @@ services:
       rabbitHost: "rabbitmq"
       rabbitUser: "guest"
       rabbitPass: "guest"
+      
+  solver:
+    depends_on:
+      - gateway
+      - rabbitmq
+    build: ./repos/MiniZincService/
+    networks:
+      - rapidmq
+      - dbnet
+    restart: always
+    environment:
+      mysqlHost: "db"
+      mysqlPass: password
+      mysqlDb: dm885
+      mysqlUser: root
+      rabbitHost: "rabbitmq"
+      rabbitUser: "guest"
+      rabbitPass: "guest"
