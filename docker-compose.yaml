@@ -76,3 +76,39 @@ services:
       rabbitHost: "rabbitmq"
       rabbitUser: "guest"
       rabbitPass: "guest"
+      
+  logging:
+    depends_on:
+      - gateway
+      - rabbitmq
+    build: ./repos/LoggingService/
+    networks:
+      - rapidmq
+      - dbnet
+    restart: always
+    environment:
+      mysqlHost: "db"
+      mysqlPass: password
+      mysqlDb: dm885
+      mysqlUser: root
+      rabbitHost: "rabbitmq"
+      rabbitUser: "guest"
+      rabbitPass: "guest"
+      
+  CRUD:
+    depends_on:
+      - gateway
+      - rabbitmq
+    build: ./repos/CRUDservice/
+    networks:
+      - rapidmq
+      - dbnet
+    restart: always
+    environment:
+      mysqlHost: "db"
+      mysqlPass: password
+      mysqlDb: dm885
+      mysqlUser: root
+      rabbitHost: "rabbitmq"
+      rabbitUser: "guest"
+      rabbitPass: "guest"
