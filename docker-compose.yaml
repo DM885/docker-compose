@@ -95,7 +95,7 @@ services:
       rabbitUser: "guest"
       rabbitPass: "guest"
       
-  CRUD:
+  crud:
     depends_on:
       - gateway
       - rabbitmq
