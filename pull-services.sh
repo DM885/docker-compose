@@ -18,3 +18,6 @@ git clone https://github.com/DM885/CRUDservice.git
 
 # Clone solver
 git clone https://github.com/DM885/MiniZincService.git
+
+# Clone job queue
+git clone https://github.com/DM885/JobService.git

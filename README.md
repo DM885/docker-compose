@@ -21,5 +21,5 @@ docker-compose down
 
 ## Rebuild
 ```
-docker-compose build --no-cache
+docker-compose build --no-cache --parallel
 ```
