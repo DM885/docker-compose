@@ -122,6 +122,9 @@ services:
       - rapidmq
       - dbnet
     restart: always
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /usr/bin/docker:/usr/bin/docker
     environment:
       mysqlHost: "db"
       mysqlPass: password
