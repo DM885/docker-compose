@@ -79,6 +79,8 @@ services:
       rabbitHost: "rabbitmq"
       rabbitUser: "guest"
       rabbitPass: "guest"
+      adminUsername: "admin"
+      adminPassword: "admin"
       
   logging:
     depends_on:
@@ -142,6 +144,24 @@ services:
       - gateway
       - rabbitmq
     build: ./repos/JobService/
+    networks:
+      - rapidmq
+      - dbnet
+    restart: always
+    environment:
+      mysqlHost: "db"
+      mysqlPass: password
+      mysqlDb: dm885
+      mysqlUser: root
+      rabbitHost: "rabbitmq"
+      rabbitUser: "guest"
+      rabbitPass: "guest"
+      
+  solvernfo:
+    depends_on:
+      - gateway
+      - rabbitmq
+    build: ./repos/SolverInfoService/
     networks:
       - rapidmq
       - dbnet
